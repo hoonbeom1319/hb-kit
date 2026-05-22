@@ -11,7 +11,7 @@ const variantClass: Record<ButtonVariant, string> = {
     secondary: 'bg-secondary-600 text-white border border-secondary-600 hover:bg-secondary-700 hover:border-secondary-700',
     outline: 'bg-transparent text-surface-foreground border border-border hover:bg-neutral-50',
     ghost: 'bg-transparent text-surface-foreground border border-transparent hover:bg-neutral-100',
-    danger: 'bg-danger text-white border border-danger hover:bg-rose-600 hover:border-rose-600'
+    danger: 'bg-danger text-white border border-danger hover:bg-danger-600 hover:border-danger-600'
 };
 
 const sizeClass: Record<ButtonSize, string> = {
@@ -28,9 +28,9 @@ type ButtonProps = React.ComponentProps<typeof ButtonPrimitive.Button> & {
 const Button = ({ variant = 'primary', size = 'md', className, ...props }: ButtonProps) => (
     <ButtonPrimitive.Button
         className={cn(
-            'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-medium',
+            'inline-flex cursor-pointer items-center justify-center gap-2 font-medium whitespace-nowrap',
             'transition-colors duration-150',
-            'focus-visible:ring-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+            'focus-visible:ring-primary-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
             'disabled:pointer-events-none disabled:opacity-50',
             variantClass[variant],
             sizeClass[size],

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AlertCircle } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 import { Label } from './label';
@@ -69,7 +70,8 @@ const FormError = ({ className, children, ref, ...props }: React.ComponentPropsW
     const ctx = useFieldContext();
     if (!ctx?.invalid || !children) return null;
     return (
-        <p ref={ref} id={ctx.errorId} className={cn('text-danger text-xs', className)} {...props}>
+        <p ref={ref} id={ctx.errorId} className={cn('text-danger flex items-center gap-1 text-xs', className)} {...props}>
+            <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             {children}
         </p>
     );

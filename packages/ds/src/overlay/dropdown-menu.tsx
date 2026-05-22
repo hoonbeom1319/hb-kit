@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Check, ChevronRight } from 'lucide-react';
 
 import * as DropdownMenuPrimitive from '../primitives/dropdown-menu';
 import { cn } from '../lib/utils';
@@ -53,7 +54,9 @@ const DropdownMenuCheckboxItem = ({
         {...props}
     >
         <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-            <DropdownMenuPrimitive.DropdownMenuItemIndicator>✓</DropdownMenuPrimitive.DropdownMenuItemIndicator>
+            <DropdownMenuPrimitive.DropdownMenuItemIndicator>
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
+            </DropdownMenuPrimitive.DropdownMenuItemIndicator>
         </span>
         {children}
     </DropdownMenuPrimitive.DropdownMenuCheckboxItem>
@@ -98,7 +101,7 @@ const DropdownMenuSubTrigger = ({ className, children, ref, ...props }: React.Co
         {...props}
     >
         {children}
-        <span className="ml-auto text-xs">›</span>
+        <ChevronRight className="ml-auto h-3.5 w-3.5 text-muted" aria-hidden="true" />
     </DropdownMenuPrimitive.DropdownMenuSubTrigger>
 );
 

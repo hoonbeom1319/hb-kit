@@ -95,6 +95,7 @@
     "embla-carousel": "^8.3.0",
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
+    "lucide-react": "^1.16.0",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
@@ -110,6 +111,7 @@
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^26.0.0",
+    "playwright": "^1.52.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

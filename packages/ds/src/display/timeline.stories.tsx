@@ -49,9 +49,9 @@ export const WithConnector: StoryObj = {
     render: () => (
         <Timeline className="max-w-sm">
             {[
-                { label: '접수', date: '01.08', color: 'bg-emerald-500', active: true },
-                { label: '검토 중', date: '01.09', color: 'bg-emerald-500', active: true },
-                { label: '승인', date: '01.10', color: 'bg-emerald-500', active: true },
+                { label: '접수', date: '01.08', color: 'bg-success', active: true },
+                { label: '검토 중', date: '01.09', color: 'bg-success', active: true },
+                { label: '승인', date: '01.10', color: 'bg-success', active: true },
                 { label: '처리 완료', date: '01.11', color: 'bg-neutral-200', active: false }
             ].map((step, i) => (
                 <TimelineItem key={i} className="relative">
@@ -66,7 +66,7 @@ export const WithConnector: StoryObj = {
                 </TimelineItem>
             ))}
         </Timeline>
-    )
+)
 };
 
 export const StatusVariants: StoryObj = {
@@ -74,21 +74,21 @@ export const StatusVariants: StoryObj = {
     render: () => (
         <Timeline className="max-w-sm">
             <TimelineItem>
-                <TimelineDot className="bg-emerald-500" />
+                <TimelineDot className="bg-success" />
                 <TimelineContent>
                     <p className="text-sm font-medium">성공</p>
                     <p className="text-xs text-neutral-400">처리가 완료되었습니다</p>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineDot className="bg-amber-400" />
+                <TimelineDot className="bg-warning" />
                 <TimelineContent>
                     <p className="text-sm font-medium">경고</p>
                     <p className="text-xs text-neutral-400">주의가 필요합니다</p>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineDot className="bg-rose-500" />
+                <TimelineDot className="bg-danger" />
                 <TimelineContent>
                     <p className="text-sm font-medium">오류</p>
                     <p className="text-xs text-neutral-400">처리 중 오류가 발생했습니다</p>

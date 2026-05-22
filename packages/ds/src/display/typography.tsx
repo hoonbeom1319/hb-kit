@@ -23,11 +23,11 @@ const P = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
 );
 
 const Lead = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-    <p className={cn('text-xl text-muted-foreground', className)} {...props} />
+    <p className={cn('text-xl text-muted', className)} {...props} />
 );
 
 const Muted = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-    <p className={cn('text-sm text-muted-foreground', className)} {...props} />
+    <p className={cn('text-sm text-muted', className)} {...props} />
 );
 
 const Code = ({ className, ...props }: HTMLAttributes<HTMLElement>) => (

@@ -17,9 +17,9 @@ const invoices = [
 ];
 
 const statusClass: Record<string, string> = {
-    완료: 'bg-emerald-50 text-emerald-600',
-    대기: 'bg-amber-50 text-amber-600',
-    취소: 'bg-rose-50 text-rose-600'
+    완료: 'bg-success/10 text-success',
+    대기: 'bg-warning/10 text-warning',
+    취소: 'bg-danger/10 text-danger'
 };
 
 export const Basic: StoryObj = {

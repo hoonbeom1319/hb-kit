@@ -1,5 +1,6 @@
 @import './font.css';
-@import './theme.css';@import "./motions.css";
+@import './theme.css';
+@import './motions.css';
 
 @layer base {
     body {

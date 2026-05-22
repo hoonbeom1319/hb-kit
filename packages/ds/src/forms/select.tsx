@@ -1,23 +1,12 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { ChevronDown, Check } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
-
-const ChevronDownIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-        <polyline points="6 9 12 15 18 9" />
-    </svg>
-);
-
-const CheckIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
-        <polyline points="20 6 9 17 4 12" />
-    </svg>
-);
 
 const SelectTrigger = ({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof SelectPrimitive.Trigger>) => (
     <SelectPrimitive.Trigger
@@ -35,7 +24,7 @@ const SelectTrigger = ({ className, children, ref, ...props }: React.ComponentPr
     >
         {children}
         <SelectPrimitive.Icon asChild>
-            <ChevronDownIcon className="text-muted ml-2 h-4 w-4 shrink-0" />
+            <ChevronDown className="text-muted ml-2 h-4 w-4 shrink-0" aria-hidden="true" />
         </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
 );
@@ -78,7 +67,7 @@ const SelectItem = ({ className, children, ref, ...props }: React.ComponentProps
     >
         <span className="absolute right-2 flex h-4 w-4 items-center justify-center">
             <SelectPrimitive.ItemIndicator>
-                <CheckIcon className="text-primary-600 h-4 w-4" />
+                <Check className="text-primary-600 h-4 w-4" aria-hidden="true" />
             </SelectPrimitive.ItemIndicator>
         </span>
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

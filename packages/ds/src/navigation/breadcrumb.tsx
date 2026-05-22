@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ChevronRight } from 'lucide-react';
 
 import * as BreadcrumbPrimitive from '../primitives/breadcrumb';
 import { cn } from '../lib/utils';
@@ -25,7 +26,7 @@ const BreadcrumbPage = ({ className, ...props }: React.ComponentPropsWithRef<typ
 
 const BreadcrumbSeparator = ({ className, children, ...props }: React.ComponentPropsWithRef<typeof BreadcrumbPrimitive.BreadcrumbSeparator>) => (
     <BreadcrumbPrimitive.BreadcrumbSeparator className={cn('text-muted', className)} {...props}>
-        {children ?? '/'}
+        {children ?? <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />}
     </BreadcrumbPrimitive.BreadcrumbSeparator>
 );
 

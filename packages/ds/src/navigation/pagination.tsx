@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import * as PaginationPrimitive from '../primitives/pagination';
 import { cn } from '../lib/utils';
@@ -39,7 +40,8 @@ const PaginationPrevious = ({ className, ...props }: React.ComponentPropsWithRef
         )}
         {...props}
     >
-        ←
+        <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+        <span>이전</span>
     </PaginationPrimitive.PaginationPrevious>
 );
 
@@ -51,13 +53,15 @@ const PaginationNext = ({ className, ...props }: React.ComponentPropsWithRef<typ
         )}
         {...props}
     >
-        →
+        <span>다음</span>
+        <ChevronRight className="h-4 w-4" aria-hidden="true" />
     </PaginationPrimitive.PaginationNext>
 );
 
 const PaginationEllipsis = ({ className, ...props }: React.ComponentPropsWithRef<typeof PaginationPrimitive.PaginationEllipsis>) => (
     <PaginationPrimitive.PaginationEllipsis className={cn('text-muted flex h-9 w-9 items-center justify-center', className)} {...props}>
-        ...
+        <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
+        <span className="sr-only">더 보기</span>
     </PaginationPrimitive.PaginationEllipsis>
 );
 

@@ -26,11 +26,11 @@ export const Default: StoryObj = {
 export const Sides: StoryObj = {
     render: () => (
         <TooltipProvider delayDuration={0}>
-            <div className="grid grid-cols-2 gap-12 p-12">
+            <div className="grid grid-cols-2 gap-x-32 gap-y-20 p-16">
                 {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
                     <Tooltip key={side} defaultOpen>
                         <TooltipTrigger asChild>
-                            <Button variant="outline">{side}</Button>
+                            <Button variant="outline" className="w-24">{side}</Button>
                         </TooltipTrigger>
                         <TooltipContent side={side}>side = {side}</TooltipContent>
                     </Tooltip>
