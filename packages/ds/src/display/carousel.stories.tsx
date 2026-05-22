@@ -17,13 +17,6 @@ const Card = ({ label }: { label: string }) => (
     </div>
 );
 
-const ArrowButton = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <button
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-sm shadow-sm disabled:opacity-30"
-        {...props}
-    />
-);
-
 export const Basic: StoryObj = {
     render: () => (
         <div className="w-full max-w-lg">
@@ -44,25 +37,74 @@ export const WithNavigation: StoryObj = {
     name: 'With Navigation Arrows',
     render: () => (
         <div className="w-full max-w-lg">
-            <div className="relative">
-                <Carousel aria-label="내비게이션 캐러셀">
-                    <CarouselContent>
-                        {items.map((item) => (
-                            <CarouselItem key={item} size="80%">
-                                <Card label={item} />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <div className="mt-3 flex justify-end gap-2">
-                        <CarouselPrevious asChild>
-                            <ArrowButton>←</ArrowButton>
-                        </CarouselPrevious>
-                        <CarouselNext asChild>
-                            <ArrowButton>→</ArrowButton>
-                        </CarouselNext>
-                    </div>
-                </Carousel>
-            </div>
+            <Carousel aria-label="내비게이션 캐러셀" navigationOverlap="overlay">
+                <CarouselContent>
+                    {items.map((item) => (
+                        <CarouselItem key={item} size="80%">
+                            <Card label={item} />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
+        </div>
+    )
+};
+
+export const WithNavigationOutside: StoryObj = {
+    name: 'Navigation Outside (No Overlap)',
+    render: () => (
+        <div className="w-full max-w-lg px-4">
+            <Carousel aria-label="바깥 화살표 캐러셀" navigationOverlap="outside">
+                <CarouselContent>
+                    {items.map((item) => (
+                        <CarouselItem key={item} size="80%">
+                            <Card label={item} />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
+        </div>
+    )
+};
+
+export const WithDots: StoryObj = {
+    name: 'With Dot Indicators',
+    render: () => (
+        <div className="w-full max-w-lg">
+            <Carousel aria-label="도트 인디케이터 캐러셀" showDots>
+                <CarouselContent>
+                    {items.map((item) => (
+                        <CarouselItem key={item} size="80%">
+                            <Card label={item} />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
+        </div>
+    )
+};
+
+export const WithNavigationAndDots: StoryObj = {
+    name: 'Arrows + Dots',
+    render: () => (
+        <div className="w-full max-w-lg">
+            <Carousel aria-label="화살표와 도트 캐러셀" showDots dotSlideLabels={items.map((item) => `${item}로 이동`)}>
+                <CarouselContent>
+                    {items.map((item) => (
+                        <CarouselItem key={item} size="80%">
+                            <Card label={item} />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
         </div>
     )
 };

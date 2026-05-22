@@ -14,7 +14,7 @@ const Input = ({ className, type = 'text', invalid, ref, ...props }: InputProps)
         className={cn(
             'border-border bg-surface text-surface-foreground flex h-10 w-full rounded-md border px-3 py-2 text-sm',
             'placeholder:text-muted',
-            'focus-visible:ring-primary-500 focus-visible:border-primary-500 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:outline-none',
+            'focus-visible:ring-primary-500 focus-visible:border-primary-500 focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:outline-none',
             'disabled:cursor-not-allowed disabled:opacity-50',
             'aria-invalid:border-danger aria-invalid:focus-visible:ring-danger',
             'file:border-0 file:bg-transparent file:text-sm file:font-medium',

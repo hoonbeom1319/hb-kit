@@ -8,13 +8,19 @@ import useEmblaCarousel from 'embla-carousel-react';
 import * as ButtonPrimitive from './button';
 import { cn } from '../lib/utils';
 
+type CarouselNavigationOverlap = 'overlay' | 'outside';
+
 type CarouselContextValue = {
     carouselRef: ReturnType<typeof useEmblaCarousel>[0];
     emblaApi: EmblaCarouselType | undefined;
     scrollPrev: () => void;
     scrollNext: () => void;
+    scrollTo: (index: number) => void;
     canScrollPrev: boolean;
     canScrollNext: boolean;
+    selectedIndex: number;
+    slideCount: number;
+    navigationOverlap: CarouselNavigationOverlap;
 };
 
 const CarouselContext = createContext<CarouselContextValue | null>(null);
@@ -31,20 +37,26 @@ type CarouselProps = HTMLAttributes<HTMLDivElement> &
         'aria-label': string;
         options?: EmblaOptionsType;
         plugins?: EmblaPluginType[];
+        navigationOverlap?: CarouselNavigationOverlap;
     }>;
 
-const Carousel = ({ className, children, options, plugins, onKeyDown: _onKeyDown, ...props }: CarouselProps) => {
+const Carousel = ({ className, children, options, plugins, navigationOverlap = 'overlay', onKeyDown: _onKeyDown, ...props }: CarouselProps) => {
     const [carouselRef, emblaApi] = useEmblaCarousel(options, plugins);
     const [canScrollPrev, setCanScrollPrev] = useState(false);
     const [canScrollNext, setCanScrollNext] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [slideCount, setSlideCount] = useState(0);
 
     const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
     const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+    const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
 
     const sync = useCallback(() => {
         if (!emblaApi) return;
         setCanScrollPrev(emblaApi.canScrollPrev());
         setCanScrollNext(emblaApi.canScrollNext());
+        setSelectedIndex(emblaApi.selectedScrollSnap());
+        setSlideCount(emblaApi.scrollSnapList().length);
     }, [emblaApi]);
 
     const handleKeyDown = useCallback(
@@ -78,8 +90,12 @@ const Carousel = ({ className, children, options, plugins, onKeyDown: _onKeyDown
                 emblaApi,
                 scrollPrev,
                 scrollNext,
+                scrollTo,
                 canScrollPrev,
-                canScrollNext
+                canScrollNext,
+                selectedIndex,
+                slideCount,
+                navigationOverlap
             }}
         >
             <div className={className} role="region" aria-roledescription="carousel" onKeyDownCapture={handleKeyDown} {...props}>
@@ -106,7 +122,7 @@ const CarouselPrevious = ({ disabled, ...props }: ComponentProps<typeof ButtonPr
     const { scrollPrev, canScrollPrev } = useCarousel();
     return (
         <ButtonPrimitive.Button
-            aria-label="?�전 ?�라?�드"
+            aria-label="다음 슬라이드"
             onClick={(e) => {
                 props.onClick?.(e);
                 scrollPrev();
@@ -133,3 +149,4 @@ const CarouselNext = ({ disabled, ...props }: ComponentProps<typeof ButtonPrimit
 };
 
 export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel };
+export type { CarouselNavigationOverlap };
