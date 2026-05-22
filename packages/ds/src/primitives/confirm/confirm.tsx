@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { ComponentProps, MouseEventHandler, PropsWithChildren, ReactNode, useEffect, useRef } from 'react';
 
-import { Dialog, DialogClose, DialogContent, DialogTitle, DialogOverlay, DialogPortal } from '@radix-ui/react-dialog';
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogOverlay, DialogPortal } from '../dialog';
 
 import * as ButtonPrimitive from '../button';
 

@@ -1,27 +1,20 @@
-import * as React from 'react';
+import { ComponentPropsWithRef } from 'react';
 
-const Breadcrumb = ({ ref, ...props }: React.ComponentPropsWithRef<'nav'>) => (
-    <nav ref={ref} aria-label="breadcrumb" {...props} />
-);
+import { Slot } from '@radix-ui/react-slot';
 
-const BreadcrumbList = ({ ref, ...props }: React.ComponentPropsWithRef<'ol'>) => (
-    <ol ref={ref} {...props} />
-);
+const Breadcrumb = ({ ref, ...props }: ComponentPropsWithRef<'nav'>) => <nav ref={ref} aria-label="breadcrumb" {...props} />;
 
-const BreadcrumbItem = ({ ref, ...props }: React.ComponentPropsWithRef<'li'>) => (
-    <li ref={ref} {...props} />
-);
+const BreadcrumbList = ({ ref, ...props }: ComponentPropsWithRef<'ol'>) => <ol ref={ref} {...props} />;
 
-const BreadcrumbLink = ({ ref, ...props }: React.ComponentPropsWithRef<'a'>) => (
-    <a ref={ref} {...props} />
-);
+const BreadcrumbItem = ({ ref, ...props }: ComponentPropsWithRef<'li'>) => <li ref={ref} {...props} />;
 
-const BreadcrumbPage = ({ ref, ...props }: React.ComponentPropsWithRef<'span'>) => (
-    <span ref={ref} aria-current="page" {...props} />
-);
+const BreadcrumbLink = ({ ref, asChild = false, ...props }: ComponentPropsWithRef<'a'> & { asChild?: boolean }) => {
+    const Comp = asChild ? Slot : 'a';
+    return <Comp ref={ref} {...props} />;
+};
 
-const BreadcrumbSeparator = ({ ref, ...props }: React.ComponentPropsWithRef<'span'>) => (
-    <span ref={ref} role="presentation" aria-hidden="true" {...props} />
-);
+const BreadcrumbPage = ({ ref, ...props }: ComponentPropsWithRef<'span'>) => <span ref={ref} aria-current="page" {...props} />;
+
+const BreadcrumbSeparator = ({ ref, ...props }: ComponentPropsWithRef<'span'>) => <span ref={ref} role="presentation" aria-hidden="true" {...props} />;
 
 export { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator };

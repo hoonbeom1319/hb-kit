@@ -19,9 +19,7 @@ export const Default: Story = {
                     <BreadcrumbLink href="#">Home</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Components</BreadcrumbLink>
-                </BreadcrumbItem>
+                <BreadcrumbItem>Components</BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                     <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
@@ -43,6 +41,28 @@ export const CustomSeparator: Story = {
                     <BreadcrumbLink href="#">Docs</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator>›</BreadcrumbSeparator>
+                <BreadcrumbItem>
+                    <BreadcrumbPage>Components</BreadcrumbPage>
+                </BreadcrumbItem>
+            </BreadcrumbList>
+        </Breadcrumb>
+    )
+};
+
+export const LinkAsButton: Story = {
+    render: () => (
+        <Breadcrumb>
+            <BreadcrumbList>
+                <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                        <button type="button">Home</button>
+                    </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Docs</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
                 <BreadcrumbItem>
                     <BreadcrumbPage>Components</BreadcrumbPage>
                 </BreadcrumbItem>

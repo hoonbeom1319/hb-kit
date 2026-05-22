@@ -12,7 +12,8 @@
     "typecheck": "pnpm -r typecheck",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && changeset publish",
+    "ds:storybook": "pnpm --filter @hb-kit/ds storybook"
   },
   "devDependencies": {
     "@changesets/cli": "latest",
