@@ -52,6 +52,7 @@
       "require": "./dist/lib/utils.cjs"
     },
     "./tokens/default.css": "./dist/tokens/default.css",
+    "./tokens/font.css": "./dist/tokens/font.css",
     "./tokens/theme.css": "./dist/tokens/theme.css",
     "./tokens/motions.css": "./dist/tokens/motions.css"
   },

@@ -19,10 +19,28 @@ const faqItems = [
     { value: 'q3', question: '해외 배송이 가능한가요?', answer: '현재 국내 배송만 지원하고 있습니다. 해외 배송은 추후 지원 예정입니다.' }
 ];
 
+const designSystemItems = [
+    {
+        value: 'included',
+        question: "What's included in the design system?",
+        answer: 'Color tokens, type scale, shadow + radius scales, motion tokens, and ~25 React components built on Radix primitives.'
+    },
+    {
+        value: 'palette',
+        question: 'Can I customize the brand palette?',
+        answer: 'Yes — override semantic tokens in theme.css or your app @theme block. Primary defaults to tangerine.'
+    },
+    {
+        value: 'dark',
+        question: 'Does it support dark mode?',
+        answer: 'Not in the current kit. Components are light-only; dark mode would be a separate token pass.'
+    }
+];
+
 export const Single: StoryObj<typeof Accordion> = {
     name: 'Single (하나만 열림)',
     render: () => (
-        <Accordion type="single" collapsible className="max-w-md">
+        <Accordion type="single" collapsible>
             {faqItems.map((item) => (
                 <AccordionItem key={item.value} value={item.value}>
                     <AccordionHeader>
@@ -38,7 +56,7 @@ export const Single: StoryObj<typeof Accordion> = {
 export const Multiple: StoryObj<typeof Accordion> = {
     name: 'Multiple (여러 개 열림)',
     render: () => (
-        <Accordion type="multiple" className="max-w-md">
+        <Accordion type="multiple">
             {faqItems.map((item) => (
                 <AccordionItem key={item.value} value={item.value}>
                     <AccordionHeader>
@@ -54,8 +72,8 @@ export const Multiple: StoryObj<typeof Accordion> = {
 export const DefaultOpen: StoryObj<typeof Accordion> = {
     name: 'Default Open',
     render: () => (
-        <Accordion type="single" defaultValue="q1" collapsible className="max-w-md">
-            {faqItems.map((item) => (
+        <Accordion type="single" defaultValue="included" collapsible>
+            {designSystemItems.map((item) => (
                 <AccordionItem key={item.value} value={item.value}>
                     <AccordionHeader>
                         <AccordionTrigger>{item.question}</AccordionTrigger>

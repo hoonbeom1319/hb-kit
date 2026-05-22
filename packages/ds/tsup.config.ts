@@ -18,5 +18,5 @@ export default defineConfig({
   treeshake: true,
   splitting: false,
   external: ['react', 'react-dom'],
-  onSuccess: 'rm -rf dist/tokens && cp -R src/tokens dist/tokens'
+  onSuccess: 'node scripts/copy-assets.mjs'
 });

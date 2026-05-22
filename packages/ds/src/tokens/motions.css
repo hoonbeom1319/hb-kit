@@ -1,6 +1,6 @@
 @theme {
     --animate-accordion-down: accordion-down var(--duration-normal) ease-out;
-    --animate-accordion-up: accordion-up var(--duration-normal) ease-in;
+    --animate-accordion-up: accordion-up var(--duration-normal) ease-out;
     --animate-toast-in: toast-in var(--duration-slow) var(--ease-spring);
     --animate-toast-out: toast-out var(--duration-normal) ease-in forwards;
     --animate-slide-in: slide-in var(--duration-normal) ease-out;
@@ -10,13 +10,21 @@
 }
 
 @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--radix-accordion-content-height);
+    }
 }
 
 @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+    to {
+        height: 0;
+    }
 }
 
 @keyframes toast-in {
@@ -42,21 +50,37 @@
 }
 
 @keyframes slide-in {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 @keyframes slide-out {
-    from { transform: translateX(0); }
-    to { transform: translateX(100%); }
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
