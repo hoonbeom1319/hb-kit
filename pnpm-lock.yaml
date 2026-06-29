@@ -36,6 +36,8 @@ importers:
         specifier: ^8.0.0
         version: 8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
 
+  packages/cli: {}
+
   packages/ds:
     dependencies:
       '@radix-ui/react-accordion':
