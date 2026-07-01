@@ -21,7 +21,3 @@ pnpm --filter @hb-kit/ds typecheck
 pnpm --filter @hb-kit/ds test
 pnpm --filter @hb-kit/ds build
 ```
-
-## Claude Design 핸드오프
-
-`claude.ai/design`에서보낸 번들은 `.design-handoff/`에 두고, `packages/ds`는 primitives + category 2계층 구조를 유지한 채 토큰·스타일만 이식합니다.
