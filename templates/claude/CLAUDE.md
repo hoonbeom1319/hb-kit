@@ -7,7 +7,8 @@
 모든 코드 작성·파일 배치·네이밍은 아래 문서를 **단일 진실 공급원(SSOT)**으로 따른다.
 구조가 애매하면 항상 이 문서를 먼저 참조한다.
 
-→ [`./conventions.md`](./conventions.md)
+→ [`.claude/rules/conventions.md`](.claude/rules/conventions.md)
+(이 파일은 `.claude/rules/`에 있어 세션 시작 시 자동 로드된다 — 위 링크는 사람용 안내다.)
 
 특히 다음을 항상 지킨다:
 

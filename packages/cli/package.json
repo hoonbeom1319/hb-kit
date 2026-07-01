@@ -1,6 +1,6 @@
 {
   "name": "@hb-kit/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Scaffold AI conventions (CLAUDE.md) into your project",
   "type": "module",
   "bin": {

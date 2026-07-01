@@ -11,14 +11,17 @@ import { c, confirm, listFiles, log, resolveTemplatesDir } from './util.js';
 const CONVENTIONS_FILE = 'conventions.md';
 const CLAUDE_FILE = 'CLAUDE.md';
 
-// Appended to an EXISTING CLAUDE.md so it always reads conventions.md,
-// without touching whatever the user already wrote above it.
+// Appended to an EXISTING CLAUDE.md as a human-facing pointer.
+// conventions.md lives in .claude/rules/ so Claude Code auto-loads it at
+// session start regardless of this block — this is for discoverability only,
+// and never touches whatever the user already wrote above it.
 const REFERENCE_BLOCK = `
 
 <!-- hb-kit -->
 ## 컨벤션
 
-코드 작성·파일 배치·네이밍은 [\`./conventions.md\`](./conventions.md) 를 단일 진실 공급원(SSOT)으로 따른다.
+코드 작성·파일 배치·네이밍은 [\`.claude/rules/conventions.md\`](.claude/rules/conventions.md) 를 단일 진실 공급원(SSOT)으로 따른다.
+(\`.claude/rules/\`에 있어 세션 시작 시 자동 로드된다 — 위 링크는 사람용 안내다.)
 `;
 
 /**

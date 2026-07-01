@@ -15,7 +15,7 @@ ${c.bold('사용법')}
   npx @hb-kit/cli <command> [options]
 
 ${c.bold('명령어')}
-  init            CLAUDE.md + conventions.md 를 현재 프로젝트에 설치
+  claude-init     CLAUDE.md + .claude/rules/conventions.md 를 현재 프로젝트에 설치
 
 ${c.bold('옵션')}
   --dir <path>    대상 디렉토리 (기본: 현재 위치)
@@ -25,8 +25,8 @@ ${c.bold('옵션')}
   -v, --version   버전
 
 ${c.bold('예시')}
-  npx @hb-kit/cli init
-  npx @hb-kit/cli init --dir ./apps/web --yes
+  npx @hb-kit/cli claude-init
+  npx @hb-kit/cli claude-init --dir ./apps/web --yes
 `;
 
 export async function run(argv) {
@@ -43,7 +43,8 @@ export async function run(argv) {
   }
 
   switch (command) {
-    case 'init':
+    case 'claude-init':
+    case 'init': // 하위 호환 alias
       await init({ flags, positional: positional.slice(1) });
       break;
     default:

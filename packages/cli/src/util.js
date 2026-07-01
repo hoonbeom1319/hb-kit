@@ -35,7 +35,9 @@ export function resolveTemplatesDir() {
     resolve(here, '..', 'templates'), // packages/cli/templates (published fallback)
   ];
   for (const dir of candidates) {
-    if (existsSync(join(dir, 'claude', 'conventions.md'))) return join(dir, 'claude');
+    if (existsSync(join(dir, 'claude', '.claude', 'rules', 'conventions.md'))) {
+      return join(dir, 'claude');
+    }
   }
   throw new Error(
     'templates를 찾을 수 없습니다. 패키지가 올바르게 설치되지 않았을 수 있어요.',
