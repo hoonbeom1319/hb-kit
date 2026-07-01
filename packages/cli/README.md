@@ -1,18 +1,20 @@
 # @hb-kit/cli
 
-AI 개발 컨벤션(`CLAUDE.md` + `conventions.md`)을 프로젝트에 꽂아주는 CLI.
+AI 개발 컨벤션(`CLAUDE.md` + `.claude/rules/conventions.md`)을 프로젝트에 꽂아주는 CLI.
 
 ## 사용
 
 ```bash
-npx @hb-kit/cli init
+npx @hb-kit/cli claude-init
 ```
+
+> `init` 은 `claude-init` 의 하위 호환 alias로 계속 동작한다.
 
 현재 디렉토리에 다음을 생성한다:
 
 ```
-CLAUDE.md        # AI 진입점 (conventions.md 참조)
-conventions.md   # Next.js + FSD 컨벤션 SSOT
+CLAUDE.md                       # AI 진입점 (사람용 컨벤션 pointer)
+.claude/rules/conventions.md    # Next.js + FSD 컨벤션 SSOT — 세션 시작 시 자동 로드
 ```
 
 ## 옵션
