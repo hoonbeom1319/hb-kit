@@ -5,11 +5,20 @@ import {
   readFileSync,
   writeFileSync,
 } from 'node:fs';
-import { basename, dirname, join, relative, resolve } from 'node:path';
-import { c, confirm, listFiles, log, resolveTemplatesDir } from './util.js';
+import { dirname, join, relative, resolve } from 'node:path';
+import { c, confirm, listFiles, log, resolvePayloadDir } from './util.js';
 
 const CONVENTIONS_FILE = 'conventions.md';
 const CLAUDE_FILE = 'CLAUDE.md';
+
+/**
+ * Map a payload-relative path (from the packages/claude peer) to its destination
+ * in the target repo. Everything lands under `.claude/` — where Claude Code
+ * auto-loads it — except the root CLAUDE.md pointer, which stays at the repo root.
+ */
+function targetRelFor(srcRel) {
+  return srcRel === CLAUDE_FILE ? CLAUDE_FILE : join('.claude', srcRel);
+}
 
 // Appended to an EXISTING CLAUDE.md as a human-facing pointer.
 // conventions.md lives in .claude/rules/ so Claude Code auto-loads it at
@@ -38,7 +47,7 @@ export async function init({ flags }) {
   const force = Boolean(flags.force || flags.f);
   const assumeYes = Boolean(flags.yes || flags.y);
 
-  const srcDir = resolveTemplatesDir();
+  const srcDir = resolvePayloadDir('claude');
   const files = listFiles(srcDir);
 
   log.info('');
@@ -50,11 +59,12 @@ export async function init({ flags }) {
   let written = 0;
   let skipped = 0;
 
-  for (const rel of files) {
+  for (const srcRel of files) {
+    const targetRel = targetRelFor(srcRel);
     const result =
-      basename(rel) === CLAUDE_FILE
-        ? await handleClaude(rel, ctx)
-        : await handleManaged(rel, ctx);
+      srcRel === CLAUDE_FILE
+        ? await handleClaude(srcRel, targetRel, ctx)
+        : await handleManaged(srcRel, targetRel, ctx);
     if (result === 'written') written++;
     else skipped++;
   }
@@ -71,9 +81,9 @@ export async function init({ flags }) {
 }
 
 /** conventions.md 등 hb-kit가 관리하는 파일: 충돌 시 물어보고 덮어쓴다. */
-async function handleManaged(rel, { targetRoot, srcDir, force, assumeYes }) {
-  const from = join(srcDir, rel);
-  const to = join(targetRoot, rel);
+async function handleManaged(srcRel, targetRel, { targetRoot, srcDir, force, assumeYes }) {
+  const from = join(srcDir, srcRel);
+  const to = join(targetRoot, targetRel);
   const shown = relative(targetRoot, to).split('\\').join('/');
 
   if (existsSync(to) && !force) {
@@ -97,9 +107,9 @@ async function handleManaged(rel, { targetRoot, srcDir, force, assumeYes }) {
  * - 있고 이미 conventions.md를 참조 → 그대로 둠
  * - 있고 참조 없음 → 기존 내용 유지한 채 참조 한 줄만 추가할지 물어봄
  */
-async function handleClaude(rel, { targetRoot, srcDir, assumeYes }) {
-  const from = join(srcDir, rel);
-  const to = join(targetRoot, rel);
+async function handleClaude(srcRel, targetRel, { targetRoot, srcDir, assumeYes }) {
+  const from = join(srcDir, srcRel);
+  const to = join(targetRoot, targetRel);
   const shown = relative(targetRoot, to).split('\\').join('/');
 
   if (!existsSync(to)) {

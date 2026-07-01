@@ -1,2 +1,2 @@
-# synced from repo-root /templates at prepack — build artifact, not source
-/templates
+# payload copies bundled from packages/<name> at prepack — build artifacts, not source
+/claude

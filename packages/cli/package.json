@@ -9,11 +9,11 @@
   "files": [
     "bin",
     "src",
-    "templates"
+    "claude"
   ],
   "scripts": {
-    "sync-templates": "node scripts/sync-templates.mjs",
-    "prepack": "node scripts/sync-templates.mjs"
+    "bundle-payload": "node scripts/bundle-payload.mjs",
+    "prepack": "node scripts/bundle-payload.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -24,30 +24,43 @@ export const log = {
 };
 
 /**
- * Locate the bundled templates directory.
- * - published package:  <pkg>/templates
- * - monorepo dev:       <repo>/templates
+ * Locate a sibling payload folder (`packages/<name>`) that this CLI installs.
+ * Each command prefix has its own peer folder (claude/, ds/, hooks/ …) that the
+ * CLI references by relative path — it is not published. Two candidates cover
+ * both run contexts:
+ *   - monorepo dev:  packages/<name>        (the SSOT peer, next to packages/cli)
+ *   - npx install:   packages/cli/<name>    (a build copy bundled at prepack)
  */
-export function resolveTemplatesDir() {
+export function resolvePayloadDir(name) {
   const here = dirname(fileURLToPath(import.meta.url)); // packages/cli/src
   const candidates = [
-    resolve(here, '..', '..', '..', 'templates'), // repo root templates (dev SSOT — preferred)
-    resolve(here, '..', 'templates'), // packages/cli/templates (published fallback)
+    resolve(here, '..', '..', name), // packages/<name> (dev SSOT — preferred)
+    resolve(here, '..', name), // packages/cli/<name> (published bundle)
   ];
   for (const dir of candidates) {
-    if (existsSync(join(dir, 'claude', '.claude', 'rules', 'conventions.md'))) {
-      return join(dir, 'claude');
-    }
+    if (existsSync(dir)) return dir;
   }
   throw new Error(
-    'templates를 찾을 수 없습니다. 패키지가 올바르게 설치되지 않았을 수 있어요.',
+    `${name} payload를 찾을 수 없습니다. packages/${name} 이 있는지 확인하세요.`,
   );
 }
 
-/** Recursively list files (relative paths) under a directory. */
+// npm always bundles these package-metadata files alongside the payload —
+// they aren't part of what gets scaffolded, so skip them (and node_modules).
+const NON_PAYLOAD = new Set([
+  'node_modules',
+  'package.json',
+  'readme.md',
+  'license',
+  'license.md',
+  'changelog.md',
+]);
+
+/** Recursively list payload files (relative paths), skipping package metadata. */
 export function listFiles(dir, base = dir) {
   const out = [];
   for (const name of readdirSync(dir)) {
+    if (NON_PAYLOAD.has(name.toLowerCase())) continue;
     const full = join(dir, name);
     if (statSync(full).isDirectory()) out.push(...listFiles(full, base));
     else out.push(full.slice(base.length + 1).split('\\').join('/'));

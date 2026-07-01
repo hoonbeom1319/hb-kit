@@ -45,18 +45,15 @@ npx @hb-kit/cli claude-init
 ## 🗂 저장소 구조
 
 ```
-templates/claude/                    # 컨벤션 원본 (SSOT) — @hb-kit/cli가 배포
-├── CLAUDE.md
-└── .claude/rules/conventions.md
-
 packages/
-├── cli/     # @hb-kit/cli — 컨벤션 스캐폴더        → packages/cli/README.md
-├── ds/      # @hb-kit/ds  — 디자인 시스템          → packages/ds/README.md
+├── cli/     # @hb-kit/cli — 형제 payload를 참조해 설치하는 dispatcher     → packages/cli/README.md
+├── claude/  # claude-* payload (CLAUDE.md + 컨벤션 SSOT) — 비공개, 배포 안 함 → packages/claude/README.md
+├── ds/      # @hb-kit/ds  — 디자인 시스템                                 → packages/ds/README.md
 ├── hooks/   # (예정)
 └── utils/   # (예정)
 ```
 
-컨벤션 원본은 루트 `templates/`에 두고(SSOT), 배포 시 `prepack`이 CLI 패키지 안으로 동기화합니다.
+명령어는 `<prefix>-<command>` 규칙을 따르고(`claude-init`, 향후 `ds-*`·`hooks-*`), prefix마다 payload 폴더가 하나씩 있습니다(`packages/claude`, 향후 `packages/hooks` …). 이 payload 폴더들은 **npm에 배포하지 않고**, `@hb-kit/cli`가 **상대경로로 참조**만 합니다. `claude-init` 실행 시 `packages/claude`의 내용을 대상 repo에 꽂습니다. 컨벤션 원본(SSOT)은 `packages/claude/rules/conventions.md`이며, `npx @hb-kit/cli` 단독 설치를 위해 publish 시점에만 payload를 CLI 패키지 안으로 번들합니다.
 
 <br/>
 

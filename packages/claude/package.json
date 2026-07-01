@@ -1,0 +1,7 @@
+{
+  "name": "@hb-kit/claude",
+  "version": "0.0.0",
+  "private": true,
+  "description": "hb-kit AI 컨벤션 payload (CLAUDE.md + rules/conventions.md) — @hb-kit/cli claude-init이 대상 repo에 설치. npm 배포 안 함.",
+  "type": "module"
+}
