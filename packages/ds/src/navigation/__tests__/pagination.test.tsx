@@ -50,9 +50,12 @@ describe('Pagination', () => {
         expect(screen.getByText('2')).toHaveClass('bg-primary-50');
     });
 
-    it('ellipsis is hidden from assistive tech', () => {
+    it('ellipsis is hidden from assistive tech and has sr-only label', () => {
         render(<TestPagination />);
-        const ellipsis = screen.getByText('...');
-        expect(ellipsis).toHaveAttribute('aria-hidden', 'true');
+        // ellipsis renders an icon inside an aria-hidden wrapper (no literal "..." text)
+        expect(screen.queryByText('...')).not.toBeInTheDocument();
+        const srLabel = screen.getByText('더 보기');
+        expect(srLabel).toHaveClass('sr-only');
+        expect(srLabel.closest('[aria-hidden="true"]')).toBeInTheDocument();
     });
 });

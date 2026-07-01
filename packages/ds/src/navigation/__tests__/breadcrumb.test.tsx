@@ -36,10 +36,13 @@ describe('Breadcrumb', () => {
         expect(screen.getByText('Breadcrumb')).toHaveAttribute('aria-current', 'page');
     });
 
-    it('renders default separator /', () => {
-        render(<TestBreadcrumb />);
-        const separators = screen.getAllByText('/');
-        expect(separators.length).toBeGreaterThan(0);
+    it('renders default separator (aria-hidden chevron icon)', () => {
+        const { container } = render(<TestBreadcrumb />);
+        const separators = container.querySelectorAll('[role="presentation"]');
+        expect(separators).toHaveLength(2);
+        // default separator is an aria-hidden icon, not a "/" text
+        expect(screen.queryByText('/')).not.toBeInTheDocument();
+        expect(separators[0].querySelector('svg')).toBeInTheDocument();
     });
 
     it('renders custom separator', () => {
