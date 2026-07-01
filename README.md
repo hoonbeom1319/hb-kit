@@ -22,10 +22,10 @@
 
 각 패키지의 자세한 사용법은 패키지 안의 README를 참고하세요.
 
-| 패키지 | 설명 | 상태 |
+| 패키지 | 설명 | 버전 |
 | --- | --- | --- |
-| [**@hb-kit/cli**](packages/cli#readme) | AI 개발 컨벤션(`CLAUDE.md` + `.claude/rules`)을 프로젝트에 꽂는 스캐폴더 | ✅ 배포됨 |
-| [**@hb-kit/ds**](packages/ds#readme) | Radix UI + Tailwind CSS v4 기반 React 디자인 시스템 | 🧪 개발 중 |
+| [**@hb-kit/cli**](packages/cli#readme) | AI 개발 컨벤션(`CLAUDE.md` + `.claude/rules`)을 프로젝트에 꽂는 스캐폴더 | [![npm](https://img.shields.io/npm/v/@hb-kit/cli?color=CB3837&label=npm)](https://www.npmjs.com/package/@hb-kit/cli) |
+| [**@hb-kit/ds**](packages/ds#readme) | Radix UI + Tailwind CSS v4 기반 React 디자인 시스템 | [![npm](https://img.shields.io/npm/v/@hb-kit/ds?color=CB3837&label=npm)](https://www.npmjs.com/package/@hb-kit/ds) |
 | **@hb-kit/hooks** | 도메인 무관 범용 React hook 모음 | 🚧 예정 |
 | **@hb-kit/utils** | 프레임워크 비의존 순수 유틸 | 🚧 예정 |
 
@@ -38,7 +38,7 @@
 npx @hb-kit/cli claude-init
 ```
 
-> 이 한 줄이 `.claude/rules/conventions.md`(Next.js + FSD 컨벤션 — Claude Code가 세션 시작 시 자동 로드)와 `CLAUDE.md`를 꽂습니다. 자세한 옵션·동작은 → [`@hb-kit/cli` README](packages/cli#readme)
+> 이 한 줄이 `.claude/rules/conventions.md`(Next.js · FSD · 서버 레이어링 컨벤션 — Claude Code가 세션 시작 시 자동 로드)와 `CLAUDE.md`를 꽂습니다. 자세한 옵션·동작은 → [`@hb-kit/cli` README](packages/cli#readme)
 
 <br/>
 

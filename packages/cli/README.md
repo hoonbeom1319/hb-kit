@@ -14,7 +14,7 @@ npx @hb-kit/cli claude-init
 
 ```
 CLAUDE.md                       # AI 진입점 (사람용 컨벤션 pointer)
-.claude/rules/conventions.md    # Next.js + FSD 컨벤션 SSOT — 세션 시작 시 자동 로드
+.claude/rules/conventions.md    # Next.js · FSD · 서버 레이어링 컨벤션 SSOT — 세션 시작 시 자동 로드
 ```
 
 ## 옵션
