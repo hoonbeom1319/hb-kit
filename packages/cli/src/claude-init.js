@@ -34,7 +34,7 @@ const REFERENCE_BLOCK = `
 `;
 
 /**
- * `hb-kit init` — scaffold conventions.md (+ CLAUDE.md) into the target project.
+ * `hb-kit claude-init` — scaffold conventions.md (+ CLAUDE.md) into the target project.
  *
  * Flags:
  *   --dir <path>   target directory (default: cwd)
@@ -42,7 +42,7 @@ const REFERENCE_BLOCK = `
  *                  existing CLAUDE.md — that one is only ever appended to)
  *   --yes,   -y    assume yes for every prompt
  */
-export async function init({ flags }) {
+export async function claudeInit({ flags }) {
   const targetRoot = resolve(process.cwd(), flags.dir === true ? '.' : flags.dir ?? '.');
   const force = Boolean(flags.force || flags.f);
   const assumeYes = Boolean(flags.yes || flags.y);
@@ -51,7 +51,7 @@ export async function init({ flags }) {
   const files = listFiles(srcDir);
 
   log.info('');
-  log.info(c.bold('hb-kit init'));
+  log.info(c.bold('hb-kit claude-init'));
   log.info(c.dim(`대상: ${targetRoot}`));
   log.info('');
 

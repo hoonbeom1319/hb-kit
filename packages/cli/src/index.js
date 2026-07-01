@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { init } from './init.js';
+import { claudeInit } from './claude-init.js';
 import { c, parseFlags } from './util.js';
 
 const pkg = JSON.parse(
@@ -44,8 +44,7 @@ export async function run(argv) {
 
   switch (command) {
     case 'claude-init':
-    case 'init': // 하위 호환 alias
-      await init({ flags, positional: positional.slice(1) });
+      await claudeInit({ flags, positional: positional.slice(1) });
       break;
     default:
       console.error(`${c.red('알 수 없는 명령어:')} ${command}`);
