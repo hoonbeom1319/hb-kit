@@ -9,8 +9,6 @@
 <br/>
 
 [![npm version](https://img.shields.io/npm/v/@hb-kit/cli?color=CB3837&logo=npm&label=%40hb-kit%2Fcli)](https://www.npmjs.com/package/@hb-kit/cli)
-[![npm downloads](https://img.shields.io/npm/dw/@hb-kit/cli?color=CB3837&logo=npm&label=downloads)](https://www.npmjs.com/package/@hb-kit/cli)
-[![GitHub stars](https://img.shields.io/github/stars/hoonbeom1319/hb-kit?color=yellow&logo=github)](https://github.com/hoonbeom1319/hb-kit/stargazers)
 [![node](https://img.shields.io/node/v/@hb-kit/cli?color=339933&logo=node.js&logoColor=white)](https://nodejs.org)
 [![license](https://img.shields.io/npm/l/@hb-kit/cli?color=blue)](./LICENSE)
 
