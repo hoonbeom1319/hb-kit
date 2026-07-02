@@ -2,6 +2,7 @@
   "name": "@hb-kit/claude",
   "version": "0.0.0",
   "private": true,
-  "description": "hb-kit AI 컨벤션 payload (CLAUDE.md + rules/conventions.md) — @hb-kit/cli claude-init이 대상 repo에 설치. npm 배포 안 함.",
+  "description": "Claude를 확장하는 각종 하네스 모음.",
+  "author": "hoonbeom",
   "type": "module"
 }

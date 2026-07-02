@@ -2,6 +2,7 @@
   "name": "@hb-kit/ds",
   "version": "0.0.2",
   "description": "Hoonbeom Design System",
+  "author": "hoonbeom",
   "type": "module",
   "sideEffects": [
     "**/*.css"

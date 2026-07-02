@@ -1,7 +1,8 @@
 {
   "name": "@hb-kit/cli",
   "version": "0.0.4",
-  "description": "Scaffold AI conventions (CLAUDE.md) into your project",
+  "description": "Install AI conventions (CLAUDE.md + rules) and Claude Code harnesses (skills) into your project",
+  "author": "hoonbeom",
   "type": "module",
   "bin": {
     "hb-kit": "bin/hb-kit.js"
@@ -20,9 +21,14 @@
   },
   "keywords": [
     "claude",
+    "claude-code",
     "cli",
     "conventions",
     "scaffold",
+    "harness",
+    "skills",
+    "agents",
+    "ai",
     "nextjs",
     "fsd"
   ],
@@ -30,6 +36,10 @@
     "type": "git",
     "url": "git+https://github.com/hoonbeom1319/hb-kit.git",
     "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/hoonbeom1319/hb-kit#readme",
+  "bugs": {
+    "url": "https://github.com/hoonbeom1319/hb-kit/issues"
   },
   "license": "MIT",
   "publishConfig": {

@@ -1,8 +1,10 @@
 # @hb-kit/cli
 
-AI 개발 컨벤션(`CLAUDE.md` + `.claude/rules/conventions.md`)을 프로젝트에 꽂아주는 CLI.
+AI 개발 컨벤션과 Claude 하네스를 프로젝트에 꽂아주는 CLI.
 
 ## 사용
+
+### claude-init — 공용 컨벤션 설치
 
 ```bash
 npx @hb-kit/cli claude-init
@@ -15,6 +17,24 @@ CLAUDE.md                       # AI 진입점 (사람용 컨벤션 pointer)
 .claude/rules/conventions.md    # Next.js · FSD · 서버 레이어링 컨벤션 SSOT — 세션 시작 시 자동 로드
 ```
 
+### claude-harness-builder — 하네스 메타 팩토리 설치
+
+```bash
+npx @hb-kit/cli claude-harness-builder
+```
+
+임의 도메인(개인 생활·여행부터 인사·마케팅·전략·데이터·코드까지)의 하네스를
+인터뷰로 설계·생성하는 **메타 팩토리 스킬**을 설치한다:
+
+```
+.claude/skills/harness-builder/
+├── SKILL.md         # 본체 — 인터뷰 5파도 → G1(청사진) → G2(파일 목록) → 생성 → H0(1회 실행)
+├── templates/       # 산출 하네스·에이전트 골격
+└── references/      # 도메인별 도구 매핑
+```
+
+설치 후 Claude Code에서 `/harness-builder` 로 호출하거나 "{X} 하네스 만들어줘"라고 요청한다.
+
 ## 옵션
 
 | 옵션 | 설명 |
@@ -25,18 +45,6 @@ CLAUDE.md                       # AI 진입점 (사람용 컨벤션 pointer)
 | `-h, --help` | 도움말 |
 | `-v, --version` | 버전 |
 
-## 동작 방식
+## 개발
 
-`@hb-kit/cli`는 **dispatcher**다. 배포할 payload는 자기 안이 아니라 **형제 폴더**(`packages/<prefix>`)가
-소유하고, cli는 그걸 **상대경로로 참조**만 한다. payload 폴더는 npm에 배포하지 않는다.
-
-- `claude-init` → `packages/claude` (`CLAUDE.md` + `rules/conventions.md`)
-- (예정) `ds-*` → `packages/ds`, `hooks-*` → `packages/hooks`
-
-`packages/claude` 밑 내용은 대상 repo의 `.claude/` 로 복사된다(`CLAUDE.md`만 예외로 repo 루트).
-
-모노레포 개발에선 `packages/claude`를 상대경로로 바로 읽는다. `npx @hb-kit/cli` 단독
-설치본을 위해선 publish 시점(`prepack`)에만 payload를 패키지 안으로 번들한다 — gitignore된
-빌드 산출물이며, 원본(SSOT)은 `packages/claude`가 소유한다.
-
-명령어는 `<prefix>-<command>` 규칙을 따른다.
+내부 구조(payload 소유권·단위 설치 규칙·prepack 번들)는 [repo 루트 `CLAUDE.md`](https://github.com/hoonbeom1319/hb-kit)를 따른다.

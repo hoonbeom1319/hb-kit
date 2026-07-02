@@ -1,24 +1,13 @@
-import {
-  copyFileSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-} from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
-import { c, confirm, listFiles, log, resolvePayloadDir } from './util.js';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative } from 'node:path';
+import { beginInstall, endInstall, installManaged } from './install.js';
+import { c, listFiles, log, confirm, resolvePayloadDir } from './util.js';
 
 const CONVENTIONS_FILE = 'conventions.md';
 const CLAUDE_FILE = 'CLAUDE.md';
-
-/**
- * Map a payload-relative path (from the packages/claude peer) to its destination
- * in the target repo. Everything lands under `.claude/` — where Claude Code
- * auto-loads it — except the root CLAUDE.md pointer, which stays at the repo root.
- */
-function targetRelFor(srcRel) {
-  return srcRel === CLAUDE_FILE ? CLAUDE_FILE : join('.claude', srcRel);
-}
+// payload 원본은 .template 이름을 쓴다 — packages/claude 자체는 Next.js 프로젝트가
+// 아니라서, CLAUDE.md 그대로 두면 그 폴더에서 작업할 때 엉뚱한 컨벤션이 자동 로드된다.
+const CLAUDE_TEMPLATE = 'CLAUDE.template.md';
 
 // Appended to an EXISTING CLAUDE.md as a human-facing pointer.
 // conventions.md lives in .claude/rules/ so Claude Code auto-loads it at
@@ -43,101 +32,67 @@ const REFERENCE_BLOCK = `
  *   --yes,   -y    assume yes for every prompt
  */
 export async function claudeInit({ flags }) {
-  const targetRoot = resolve(process.cwd(), flags.dir === true ? '.' : flags.dir ?? '.');
-  const force = Boolean(flags.force || flags.f);
-  const assumeYes = Boolean(flags.yes || flags.y);
-
   const srcDir = resolvePayloadDir('claude');
-  const files = listFiles(srcDir);
+  const ctx = beginInstall('claude-init', flags, srcDir);
 
-  log.info('');
-  log.info(c.bold('hb-kit claude-init'));
-  log.info(c.dim(`대상: ${targetRoot}`));
-  log.info('');
-
-  const ctx = { targetRoot, srcDir, force, assumeYes };
-  let written = 0;
-  let skipped = 0;
+  // claude-init은 공용 컨벤션(CLAUDE.template.md + rules/)만 설치한다.
+  // payload의 나머지(harness-builder/ 등 단위 폴더)는 각자의 명령이 담당한다.
+  const files = listFiles(srcDir).filter(
+    (f) => f === CLAUDE_TEMPLATE || f.startsWith('rules/'),
+  );
 
   for (const srcRel of files) {
-    const targetRel = targetRelFor(srcRel);
-    const result =
-      srcRel === CLAUDE_FILE
-        ? await handleClaude(srcRel, targetRel, ctx)
-        : await handleManaged(srcRel, targetRel, ctx);
-    if (result === 'written') written++;
-    else skipped++;
+    if (srcRel === CLAUDE_TEMPLATE) await installClaudeEntry(srcRel, ctx);
+    else await installManaged(srcRel, join('.claude', srcRel), ctx);
   }
 
-  log.info('');
-  log.info(
-    `${c.green(`${written}개 적용`)}${skipped ? c.dim(`, ${skipped}개 건너뜀`) : ''}`,
-  );
-  log.info('');
-  log.info(c.bold('다음 단계'));
-  log.info(`  ${c.dim('1.')} CLAUDE.md 하단에 프로젝트별 규칙을 추가하세요.`);
-  log.info(`  ${c.dim('2.')} 컨벤션 수정은 ${CONVENTIONS_FILE} 에서.`);
-  log.info('');
-}
-
-/** conventions.md 등 hb-kit가 관리하는 파일: 충돌 시 물어보고 덮어쓴다. */
-async function handleManaged(srcRel, targetRel, { targetRoot, srcDir, force, assumeYes }) {
-  const from = join(srcDir, srcRel);
-  const to = join(targetRoot, targetRel);
-  const shown = relative(targetRoot, to).split('\\').join('/');
-
-  if (existsSync(to) && !force) {
-    const overwrite =
-      assumeYes || (await confirm(`${c.bold(shown)} 이(가) 이미 있어요. 최신 내용으로 덮어쓸까요?`, true));
-    if (!overwrite) {
-      log.skip(`건너뜀  ${shown}`);
-      return 'skipped';
-    }
-  }
-
-  mkdirSync(dirname(to), { recursive: true });
-  copyFileSync(from, to);
-  log.ok(`생성   ${shown}`);
-  return 'written';
+  endInstall(ctx, [
+    'CLAUDE.md 하단에 프로젝트별 규칙을 추가하세요.',
+    `컨벤션 수정은 ${CONVENTIONS_FILE} 에서.`,
+  ]);
 }
 
 /**
  * CLAUDE.md: 사용자 소유 파일이라 절대 덮어쓰지 않는다.
+ * CLAUDE.template.md 원본이 대상 repo 루트에 CLAUDE.md로 놓인다.
  * - 없으면 → 템플릿으로 새로 생성
  * - 있고 이미 conventions.md를 참조 → 그대로 둠
  * - 있고 참조 없음 → 기존 내용 유지한 채 참조 한 줄만 추가할지 물어봄
  */
-async function handleClaude(srcRel, targetRel, { targetRoot, srcDir, assumeYes }) {
-  const from = join(srcDir, srcRel);
-  const to = join(targetRoot, targetRel);
-  const shown = relative(targetRoot, to).split('\\').join('/');
+async function installClaudeEntry(srcRel, ctx) {
+  const from = join(ctx.srcDir, srcRel);
+  const to = join(ctx.targetRoot, CLAUDE_FILE);
+  const shown = relative(ctx.targetRoot, to).split('\\').join('/');
 
   if (!existsSync(to)) {
     mkdirSync(dirname(to), { recursive: true });
     copyFileSync(from, to);
     log.ok(`생성   ${shown}`);
-    return 'written';
+    ctx.written++;
+    return;
   }
 
   const current = readFileSync(to, 'utf8');
   if (current.includes(CONVENTIONS_FILE)) {
     log.skip(`이미 ${CONVENTIONS_FILE} 참조함  ${shown}`);
-    return 'skipped';
+    ctx.skipped++;
+    return;
   }
 
   log.warn(`${c.bold(shown)} 이(가) 이미 있어요.`);
   const append =
-    assumeYes ||
+    ctx.assumeYes ||
     (await confirm(
       `기존 내용은 그대로 두고, ${CONVENTIONS_FILE}를 항상 읽도록 참조 한 줄만 추가할까요?`,
       true,
     ));
   if (!append) {
     log.skip(`건너뜀  ${shown} ${c.dim(`(${CONVENTIONS_FILE}만 설치됨)`)}`);
-    return 'skipped';
+    ctx.skipped++;
+    return;
   }
 
   writeFileSync(to, current.replace(/\s*$/, '') + REFERENCE_BLOCK);
   log.ok(`참조 추가  ${shown}`);
-  return 'written';
+  ctx.written++;
 }

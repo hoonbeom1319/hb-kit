@@ -1,3 +1,4 @@
+import globals from 'globals';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactPlugin from 'eslint-plugin-react';
@@ -8,7 +9,8 @@ export default tseslint.config(
     js.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        files: ['packages/**/*.{ts,tsx}'],
+        files: ['packages/**/*.{ts,tsx,js,mjs}'],
+        languageOptions: { globals: globals.node },
         plugins: {
             react: reactPlugin,
             'react-hooks': reactHooks

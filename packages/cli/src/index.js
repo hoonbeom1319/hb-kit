@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { claudeHarnessBuilder } from './claude-harness-builder.js';
 import { claudeInit } from './claude-init.js';
 import { c, parseFlags } from './util.js';
 
@@ -15,7 +16,8 @@ ${c.bold('사용법')}
   npx @hb-kit/cli <command> [options]
 
 ${c.bold('명령어')}
-  claude-init     CLAUDE.md + .claude/rules/conventions.md 를 현재 프로젝트에 설치
+  claude-init                CLAUDE.md + .claude/rules/conventions.md 를 현재 프로젝트에 설치
+  claude-harness-builder     하네스 메타 팩토리(스킬)를 .claude/skills/ 에 설치
 
 ${c.bold('옵션')}
   --dir <path>    대상 디렉토리 (기본: 현재 위치)
@@ -27,6 +29,7 @@ ${c.bold('옵션')}
 ${c.bold('예시')}
   npx @hb-kit/cli claude-init
   npx @hb-kit/cli claude-init --dir ./apps/web --yes
+  npx @hb-kit/cli claude-harness-builder
 `;
 
 export async function run(argv) {
@@ -45,6 +48,9 @@ export async function run(argv) {
   switch (command) {
     case 'claude-init':
       await claudeInit({ flags, positional: positional.slice(1) });
+      break;
+    case 'claude-harness-builder':
+      await claudeHarnessBuilder({ flags, positional: positional.slice(1) });
       break;
     default:
       console.error(`${c.red('알 수 없는 명령어:')} ${command}`);
