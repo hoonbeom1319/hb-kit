@@ -35,6 +35,8 @@ npx @hb-kit/cli claude-harness-builder
 
 설치 후 Claude Code에서 `/harness-builder` 로 호출하거나 "{X} 하네스 만들어줘"라고 요청한다.
 
+→ 자세한 소개·사용법: [harness-builder README](https://github.com/hoonbeom1319/hb-kit/blob/main/packages/claude/harness-builder/README.md)
+
 ## 옵션
 
 | 옵션 | 설명 |
