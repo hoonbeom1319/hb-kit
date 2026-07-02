@@ -129,17 +129,42 @@ export const meta = {
   description: '{한 줄}',
   phases: [{ title: '{단계1}' }, { title: '{단계2}' }],
 }
+
+// [실측 ①] args는 문자열로 전달될 수 있다 — 파싱 가드 필수
+const input = typeof args === 'string' ? JSON.parse(args) : args
+
+// [실측 ②] 에이전트 레지스트리는 세션 시작 시점 스냅샷 — 하네스를 만든 당일 세션(H0 포함)에는
+// 신규 agentType이 해석되지 않는다 (다음 세션부터 인식). agentType 시도 → 미해석 시 인라인 폴백.
+// ROLES는 .claude/agents/{하네스-이름}/*.md 지침의 요약 사본 — 에이전트 파일 수정 시 함께 갱신.
+// 폴백 경로는 에이전트 파일의 tools 제한을 잃는다 — 금지사항을 ROLES 텍스트에도 명시할 것.
+const ROLES = {
+  '{역할1}': `[역할: {역할1}] {핵심 지침 + 하지 말 것 요약}`,
+  '{검증역할}': `[역할: {검증역할}] {핵심 지침 + 하지 말 것 요약}`,
+}
+let registered = true
+const role = async (kind, prompt, opts) => {
+  if (registered) {
+    try { return await agent(prompt, { ...opts, agentType: `{하네스-이름}-${kind}` }) }
+    catch (e) {
+      if (!/not found|unknown|no such/i.test(String(e))) throw e
+      registered = false
+    }
+  }
+  return agent(`${ROLES[kind]}\n\n${prompt}`, opts)
+}
+
 phase('{단계1}')
 // 예: 항목별 팬아웃 → 각 결과를 즉시 검증 (barrier 없이 pipeline)
 const results = await pipeline(
-  {대상목록},
-  item => agent(`{역할 프롬프트}: ${item}`, { agentType: '{하네스-이름}-{역할1}', phase: '{단계1}', schema: {스키마} }),
-  r => agent(`검증: ${JSON.stringify(r)}`, { agentType: '{하네스-이름}-{검증역할}', phase: '{단계2}', schema: {스키마} }),
+  input.{대상목록},
+  item => role('{역할1}', `{역할 프롬프트}: ${item}`, { phase: '{단계1}', schema: {스키마} }),
+  r => role('{검증역할}', `검증: ${JSON.stringify(r)}`, { phase: '{단계2}', schema: {스키마} }),
 )
 return results.filter(Boolean)
 ```
 
 - ⛔ 부수효과 게이트는 **스크립트 밖**(메인 대화)에서 통과시킨다 — Workflow 안에서 사용자 승인 없이 부수효과를 실행하지 않는다.
+- [실측 ①②]는 hbt H0 실행 실패로 확인된 플랫폼 사실이다 — 생성 시 삭제하지 말 것.
 
 ---
 
