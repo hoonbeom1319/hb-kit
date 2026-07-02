@@ -1,6 +1,6 @@
 {
   "name": "@hb-kit/cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Install AI conventions (CLAUDE.md + rules) and Claude Code harnesses (skills) into your project",
   "author": "hoonbeom",
   "type": "module",

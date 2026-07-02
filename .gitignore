@@ -30,3 +30,7 @@ yarn-error.log*
 
 # claude
 .claude/memory
+
+# prepack payload bundle (source of truth: packages/claude)
+packages/cli/claude/
+*.tgz
