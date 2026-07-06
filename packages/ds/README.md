@@ -57,7 +57,7 @@ import { cn } from '../lib/utils';
 | `@hb-kit/ds/display` | Button · Badge · Avatar · Carousel · Table · Timeline · Typography |
 | `@hb-kit/ds/forms` | Input · Textarea · Checkbox · RadioGroup · Select · Switch · Slider · Toggle · ToggleGroup · Label · Field |
 | `@hb-kit/ds/feedback` | Alert · Toast · Progress · Spinner · Skeleton |
-| `@hb-kit/ds/overlay` | Dropdown · Popover · Tooltip · Confirm · Slide |
+| `@hb-kit/ds/overlay` | Dropdown · Popover · Tooltip · Confirm · Slide · BottomSheet |
 | `@hb-kit/ds/surfaces` | Card · Accordion · Tabs |
 | `@hb-kit/ds/navigation` | Breadcrumb · Pagination |
 | `@hb-kit/ds/layout` | Container · Separator |

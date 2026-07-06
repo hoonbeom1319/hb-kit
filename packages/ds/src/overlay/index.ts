@@ -1,3 +1,4 @@
+export * from './bottom-sheet';
 export * from './confirm';
 export * from './slide';
 export * from './tooltip';

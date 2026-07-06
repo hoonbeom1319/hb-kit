@@ -7,6 +7,8 @@
     --animate-slide-out: slide-out var(--duration-normal) ease-in forwards;
     --animate-fade-in: fade-in var(--duration-fast) ease-out;
     --animate-fade-out: fade-out var(--duration-fast) ease-in forwards;
+    --animate-sheet-in: sheet-in var(--duration-slow) var(--ease-spring);
+    --animate-sheet-out: sheet-out var(--duration-normal) ease-in forwards;
 }
 
 @keyframes accordion-down {
@@ -82,5 +84,24 @@
     }
     to {
         opacity: 0;
+    }
+}
+
+@keyframes sheet-in {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes sheet-out {
+    from {
+        /* 드래그로 닫을 때 손을 놓은 위치에서 이어서 내려간다 (기본 0). */
+        transform: translateY(var(--sheet-exit-from, 0px));
+    }
+    to {
+        transform: translateY(100%);
     }
 }
